@@ -18,7 +18,7 @@ bool Stack::_IsEmpty() const {
 
 void Stack::Push(const string& Value) {
     if (_Size >= _MaxSize) {
-        throw StackException("Ошибка: стек переполнен (максимум 100 элементов)!");
+        throw StackException("Error: stack overflow (maximum 100 elements)!");
     }
     StackNode* NewNode = new StackNode(Value);
     if (_IsEmpty()) {
@@ -35,18 +35,18 @@ void Stack::Push(const string& Value) {
 
 void Stack::Pop() {
     if (_IsEmpty()) {
-        throw StackException("Ошибка: стэк пуст!");
+        throw StackException("Error: stack is empty!");
     }
     StackNode* Temp = _Head;
     _Head = _Head->GetNext();
+    cout << Temp->GetValue() << endl;
     delete Temp;
     _Size--;
-    cout << "ok" << endl;
 }
 
 void Stack::Back() {
     if (_IsEmpty()) {
-        throw StackException("Ошибка: стэк пуст!");
+        throw StackException("Error: stack is empty!");
     }
     cout << _Head->GetValue() << endl;
 }
@@ -86,21 +86,21 @@ void Stack::_Annihilation() {
 }
 
 void Stack::ShowCommands() {
-    cout << "Список команд:" << endl;
+    cout << "Command list:" << endl;
     cout << endl;
-    cout << "exit - выход из программы" << endl;
+    cout << "exit - exit the program" << endl;
     cout << endl;
-    cout << "commands - показать список команд" << endl;
+    cout << "commands - show command list" << endl;
     cout << endl;
-    cout << "push n - добавить в стэк элемент n" << endl;
+    cout << "push n - add element n to the stack" << endl;
     cout << endl;
-    cout << "pop - удалить последний элемент" << endl;
+    cout << "pop - remove the last element" << endl;
     cout << endl;
-    cout << "back - вывести последний элемент" << endl;
+    cout << "back - show the last element" << endl;
     cout << endl;
-    cout << "size - вывести количество элементов стэка" << endl;
+    cout << "size - show the number of elements in the stack" << endl;
     cout << endl;
-    cout << "clear - удалить все элементы стэка" << endl;
+    cout << "clear - remove all elements from the stack" << endl;
     cout << endl;
 }
 
@@ -131,10 +131,10 @@ bool Stack::IsNumber(const string& String) {
 }
 
 void Stack::CommandCycle() {
-    cout << "Привет, это программа для работы со стэком." << endl;
+    cout << "Hello, this is a stack program." << endl;
     cout << endl;
     ShowCommands();
-    cout << "Введите команду: " << endl;
+    cout << "Enter a command: " << endl;
     string Input = "";
     while (true) {
         cout << endl;
@@ -160,26 +160,26 @@ void Stack::CommandCycle() {
                         Push(Value);
                     }
                     else {
-                        cout << "Ваш элемент не является числом, продолжить? (Y/n)" << endl;
-                        string Choise;
+                        cout << "Your element is not a number, continue? (Y/n)" << endl;
+                        string Choice;
                         bool Flag = true;
                         while (Flag) {
-                            getline(cin, Choise);
-                            if (Choise == "Y") {
+                            getline(cin, Choice);
+                            if (Choice == "Y") {
                                 Push(Value);
                                 Flag = false;
                             }
-                            else if (Choise == "n") {
+                            else if (Choice == "n") {
                                 Flag = false;
                             }
                             else {
-                                cout << "Пожалуйста введите Y (да) или n (нет)" << endl;
+                                cout << "Please enter Y (yes) or n (no)" << endl;
                             }
                         }
                     }
                 }
                 else {
-                    throw StackException("Ошибка: неверный формат команды push!");
+                    throw StackException("Error: invalid push command format!");
                 }
             }
             else if (Command == "pop") {
@@ -195,13 +195,13 @@ void Stack::CommandCycle() {
                 Clear();
             }
             else {
-                throw StackException("Неизвестная команда! Доступные команды: exit, commands, push, pop, back, size, clear");
+                throw StackException("Unknown command! Available commands: exit, commands, push, pop, back, size, clear");
             }
         }
         catch (const StackException& Exception) {
             cerr << Exception.what() << endl;
         }
         cout << endl;
-        cout << "Введите следующую команду:" << endl;
+        cout << "Enter next command:" << endl;
     }
 }
